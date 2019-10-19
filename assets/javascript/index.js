@@ -1,6 +1,8 @@
 
 // on Document Ready, Initiate Functions
 $(document).ready(function() {
+
+
 //---ARRAY INFORMATION---//
 
     // Creating Array for Questions, Answers, Correct Answer
@@ -27,68 +29,57 @@ $(document).ready(function() {
         },
     ];
 
-//---VARIABLES---//
-var correctAnswers = 0;
-var wrongAnswers = 0;
-var incompleteAnswers = 0;
 
-
-//---TIMER INFORMATION---//
-    // Creating Timer
+    //---VARIABLES---//
+    var choiceOptions = [];
+    var correctAnswers = 0;
+    var wrongAnswers = 0;
+    var incompleteAnswers = 0;
+    var counter = 2;
     var time = setInterval(countDown, 1000);
 
-    // Timer Start = 90 seconds
-    var counter = 15
+
+    //---TIMER INFORMATION---//
 
     // Displaying Timer and Counter
     $("#display-4").text(counter);
-
+    createQuestions();
     // Starting timer function countDown
     function countDown() {
-        counter--
+        counter--;
         $("#display-4").text(counter);
+
         // when counter = 0, showResults
         if (counter === 0) {
-            clearInterval(time)
-            //showResults();
-        };
+            incompleteAnswers++;
+            stopCounter();
+        } //else if (counter !== 0) {
+            //wrongAnswers++;
+            //stopCounter();
+        //}
         console.log(counter);
     };
 
+    // stopCounter to showResults bootstrap modal
+    function stopCounter() {
+        clearInterval(time);
+        $('#results').modal('show');
+    };
+
+    // create questions to populate within HTML
+    function createQuestions() {
+        for (var i = 0; i < questionInformation.length; i++) {
+            $(".card-header").text(questionInformation[i].title);
+            console.log(questionInformation[i].title);
+
+            for (var j = 0; j < questionInformation[j].question.length; j++) {
+                $(".card-title").html(questionInformation[j].question);
+                console.log(questionInformation[j].question);
+            };
+        };
+    }
 
 console.log("Document Ready!");
 console.log(questionInformation);
+
 }); //---END OF DOCUMENT READY---//
-
-
-function showQuestionCard() {
-    for (var i = 0; i < questionInformation.length; i++) {
-        var card = `<div>`
-        var cardTitle = `<h1>${questionInformation[i].t}</h1>`
-        $(card).append(cardTitle);
-    }
-}
-//console.log(showQuestionCard(cardTitle));
-
-// function showQuestion() {
-//     for (var i = 0; i < questionInformation.length; i++) {
-//         var card = 
-
-//     }
-//     for (var j = 0; j < questionInformation.length; j++) {
-//         var card = `<div>`
-//         var questionTitle = `<h1>${questionInformation[i].q}</h1>`
-//         card.append(questionTitle);
-//             console.log(questionTitle);
-//         for (var j = 0; j < questionInformation[i].a.length; j++) {
-//             var answerRadioButton = 
-//                 `<input type="radio" name=${q} answers=${j}>
-//                 ${questionInformation[i].a[j]}
-//                 <br>`
-//             card.append(answerRadioButton);
-//         }
-//     $("#questions").append(card)
-//     }
-// }
-
-// console.log(showQuestion);

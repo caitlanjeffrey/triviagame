@@ -13,3 +13,29 @@ body {
     color: #ffffff;
     background-color: cadetblue;
 }
+
+.modal-header {
+    color: #ffffff;
+    background-color: cadetblue;
+
+}
+.result-title {
+    text-align: center;
+}
+
+button.close {
+    color: #ffffff;
+    opacity: 1;
+}
+
+button.close:hover {
+    color: #ffffff;
+}
+
+button.close:focus {
+    color: #ffffff;
+}
+
+button.close:active {
+    color: #ffffff;
+}
