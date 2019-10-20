@@ -72,12 +72,15 @@ $(document).ready(function(){
                 $("#correct").text(correctAnswers);
                 $("#answer-text").text(" Correct!")
 
+                // I can't seem to figure out if an answer selected is validating
             }
             else {
                 wrongAnswers++;
                 $("#wrong").text(wrongAnswers);
                 $("#answer-text").text(" Incorrect.")
             }
+
+                // I can't seem to figure out if an answer selected is validating
         });
         console.log("Time: " + counter);
     };
