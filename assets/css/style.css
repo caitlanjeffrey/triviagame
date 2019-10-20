@@ -39,3 +39,7 @@ button.close:focus {
 button.close:active {
     color: #ffffff;
 }
+
+#list-answers {
+    list-style: none;
+}

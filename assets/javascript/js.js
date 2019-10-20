@@ -1,3 +1,4 @@
+
 // on Document Ready, Initiate Functions
 $(document).ready(function(){
 
@@ -33,19 +34,16 @@ $(document).ready(function(){
     var correctAnswers = 0;
     var wrongAnswers = 0;
     var incompleteAnswers = 0;
-    var counter = 2;
-    var modalCounter = 5;
+    var counter = 5;
     var time = setInterval(countDown, 1000);
 
-    
     //---TIMER INFORMATION---//
 
     // Displaying Timer and Counter
     $("#display-4").text(counter);
     createQuestions();
     console.log("Question Number: " + questionNumber);
-
-    // Starting timer function countDown
+    
     function countDown() {
         counter--;
         $("#display-4").text(counter);
@@ -55,17 +53,27 @@ $(document).ready(function(){
             incompleteAnswers++;
             stopCounter();
             console.log("Incomplete: " + incompleteAnswers);
-
-        } if (userAnswer != questionInformation[i].answer) {
-            wrongAnswers++;
-            stopCounter();
-            console.log("Wrong: " + wrongAnswers);
-        }
             $("#incomplete").text(incompleteAnswers);
-            $("#wrong").text(wrongAnswers);
+            $("#answer-text").text("Incomplete.");
+        }; 
+        
+        $("input").on("click", function(counter){
+            counter--;
+            stopCounter();
 
-            console.log("Time: " + counter);
-            console.log("Correct: " + correctAnswers);
+            if (userAnswer === questionInformation.answer) {
+                correctAnswers++;
+                $("#correct").text("Correct!");
+            }
+            else {
+                wrongAnswers++;
+            }
+        });
+
+        $("#answer-text").text("Incomplete.");
+        $("#wrong").text(wrongAnswers);
+
+        console.log("Time: " + counter);
     };
 
     // stopCounter to showResults bootstrap modal
@@ -76,28 +84,18 @@ $(document).ready(function(){
 
     // create questions to populate within HTML
     function createQuestions() {
+        for (var i = 0; i < questionInformation.length; i++) {
+            $(".card-header").text(questionInformation[questionNumber].title);
+            $(".card-title").html(questionInformation[questionNumber].question);
+        }
         // identifying which html element to place my object information
-        $(".card-header").text(questionInformation[questionNumber].title);
-        $(".card-title").html(questionInformation[questionNumber].question);
-
-        // variables to build input radio buttons
-        var answers = $("<input type='radio' name='q'/>");
-        var answersLabel = $("<label>")
-        
-        answersLabel.attr("for", questionInformation[questionNumber].choice[0]);
-        answersLabel.text(" " + questionInformation[questionNumber].choice[0]);
+            for (var j = 0; j < 4; j++) {
+                var answers = $("<li><input type='radio' name='q'/><span>" + questionInformation[questionNumber].choice[j] + "</span></li>");
+                $("#radio-group").append(answers);
+            }
 
         console.log(questionInformation[questionNumber].title);
         console.log(questionInformation[questionNumber].question);
-        console.log(questionInformation[questionNumber].choice[0]);
-
-        $("#radio-group").append(answers);
-        $("#radio-group").append(answersLabel);
-        questionNumber++;
-    };
-
-console.log("Document Ready!");
-console.log(questionInformation);
-}); 
-
-//---END OF DOCUMENT READY---//
+        console.log(answers);
+    }
+});
