@@ -1,5 +1,3 @@
-
-// on Document Ready, Initiate Functions
 $(document).ready(function(){
 
     //---ARRAY INFORMATION---//
@@ -17,7 +15,7 @@ $(document).ready(function(){
             title: "Question - 2",
             question: "What is Caitlan's Favorite Dish?",
             choice: ["  Risotto", "  Polenta", "  Lasagna", "  All Of The Above"],
-            answer: 2,
+            answer: 0,
         },
 
         {
@@ -30,7 +28,7 @@ $(document).ready(function(){
 
     //---VARIABLES---//
     var questionNumber = 0;
-    var userAnswer = "";
+    var userAnswer = [];
     var correctAnswers = 0;
     var wrongAnswers = 0;
     var incompleteAnswers = 0;
@@ -52,34 +50,41 @@ $(document).ready(function(){
         if (counter === 0) {
             incompleteAnswers++;
             stopCounter();
-            console.log("Incomplete: " + incompleteAnswers);
-            $("#incomplete").text(incompleteAnswers);
-            $("#answer-text").text("Incomplete.");
-        }; 
-        
-        $("input").on("click", function(counter){
-            counter--;
-            stopCounter();
+            $('#results').modal('show');
 
-            if (userAnswer === questionInformation.answer) {
+            $("#incomplete").text(incompleteAnswers);
+            $("#answer-text").text(" Incomplete.");
+
+            console.log("Incomplete: " + incompleteAnswers);
+        }; 
+
+        $("input").on("click", function(){
+            userAnswer = ($(this).attr("index", "currentvalue"));
+            console.log("User Answer: " + userAnswer);
+
+            stopCounter();
+            $('#results').modal('show');
+
+            if (userAnswer === questionInformation[questionNumber].answer) {
+                console.log("Question Correct Answer:" + questionInformation[questionNumber].answer);
                 correctAnswers++;
-                $("#correct").text("Correct!");
+                $("#correct").text(correctAnswers);
+                $("#answer-text").text(" Correct!")
+                //resetGame()
             }
             else {
                 wrongAnswers++;
+                $("#wrong").text(wrongAnswers);
+                $("#answer-text").text(" Incorrect.")
+                //resetGame()
             }
         });
-
-        $("#answer-text").text("Incomplete.");
-        $("#wrong").text(wrongAnswers);
-
         console.log("Time: " + counter);
     };
-
+    
     // stopCounter to showResults bootstrap modal
     function stopCounter() {
         clearInterval(time);
-        $('#results').modal('show');
     };
 
     // create questions to populate within HTML
