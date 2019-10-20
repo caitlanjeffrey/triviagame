@@ -56,10 +56,11 @@ $(document).ready(function(){
             $("#answer-text").text(" Incomplete.");
 
             console.log("Incomplete: " + incompleteAnswers);
+            resetGame();
         }; 
 
         $("input").on("click", function(){
-            userAnswer = ($(this).attr("index", "currentvalue"));
+            userAnswer = ($(this));
             console.log("User Answer: " + userAnswer);
 
             stopCounter();
@@ -70,13 +71,12 @@ $(document).ready(function(){
                 correctAnswers++;
                 $("#correct").text(correctAnswers);
                 $("#answer-text").text(" Correct!")
-                //resetGame()
+
             }
             else {
                 wrongAnswers++;
                 $("#wrong").text(wrongAnswers);
                 $("#answer-text").text(" Incorrect.")
-                //resetGame()
             }
         });
         console.log("Time: " + counter);
@@ -87,17 +87,25 @@ $(document).ready(function(){
         clearInterval(time);
     };
 
+    // create resetGame function to add new questions
+    function resetGame() {
+        createQuestions(questionNumber++);
+        countDown();
+
+        // I can't seem to figure out how to remove the appended answers, with the next four.
+    }
+
     // create questions to populate within HTML
     function createQuestions() {
         for (var i = 0; i < questionInformation.length; i++) {
             $(".card-header").text(questionInformation[questionNumber].title);
-            $(".card-title").html(questionInformation[questionNumber].question);
+            $(".card-title").text(questionInformation[questionNumber].question);
         }
         // identifying which html element to place my object information
-            for (var j = 0; j < 4; j++) {
-                var answers = $("<li><input type='radio' name='q'/><span>" + questionInformation[questionNumber].choice[j] + "</span></li>");
-                $("#radio-group").append(answers);
-            }
+        for (var j = 0; j < 4; j++) {
+            var answers = $("<li><input type='radio' name='q'/><span>" + questionInformation[questionNumber].choice[j] + "</span></li>");
+            $("#radio-group").append(answers);
+        }
 
         console.log(questionInformation[questionNumber].title);
         console.log(questionInformation[questionNumber].question);
